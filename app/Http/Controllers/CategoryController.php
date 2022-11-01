@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FetchWordsByCategory;
 use App\Models\Category;
 use App\Models\Word;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -18,9 +19,11 @@ class CategoryController extends Controller
         return response()->json(Category::all()->random(1));
     }
 
-    public function words(FetchWordsByCategory $request, string $category)
+    public function words(FetchWordsByCategory $request)
     {
-        $words = Word::whereRelation('category', 'name', $category)->get();
+        $words = Word::whereRelation('category', 'name', $request->category)->get();
+
+        Log::info('Word by category accessed', ['category' => $request->category]);
 
         return response()->json($words);
     }

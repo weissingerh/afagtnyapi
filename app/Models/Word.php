@@ -12,6 +12,7 @@ class Word extends Model
     protected $fillable = [
         'name',
         'is_public',
+        'category_id',
     ];
 
     protected $hidden = [

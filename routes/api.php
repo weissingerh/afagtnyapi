@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WordController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::group(['prefix' => 'words', 'name' => 'words'], function () {
     Route::get('/', [WordController::class, 'index'])->name('index');
@@ -34,5 +29,5 @@ Route::group(['prefix' => 'categories', 'name' => 'categories'], function () {
 
 Route::get('category/{category}', [CategoryController::class, 'words'])->name('category.words');
 
-Route::put('word/create', [WordController::class, 'create'])->name('word.create');
+Route::post('word/create', [WordController::class, 'create'])->name('word.create');
 Route::delete('{word}/delete', [WordController::class, 'destroy'])->name('word.delete');
