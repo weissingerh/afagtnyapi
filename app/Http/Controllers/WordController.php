@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateWordRequest;
+use App\Jobs\CreateNewWord;
 use App\Models\Word;
-use App\Services\WordService;
 use Illuminate\Support\Facades\Log;
 
 class WordController extends Controller
@@ -25,11 +25,11 @@ class WordController extends Controller
 
     public function create(CreateWordRequest $request)
     {
-        $word = (new WordService)->createWord($request->name, $request->category);
+        dispatch(new CreateNewWord($request->name, $request->category));
 
-        Log::info('Word created', ['id' => $word->id, 'name' => $word->name]);
+        Log::info('Word is being created.', ['name' => $request->name, 'category' => $request->category]);
 
-        return response()->json($word);
+        return response()->json('Word is being created.');
     }
 
     public function destroy(Word $word)
